@@ -1,0 +1,9 @@
+[package]
+name = "rust_countdown"
+version = "0.1.0"
+edition = "2024"
+[[bin]]
+name = "countdown"
+path = "src/bin/main.rs"
+
+[dependencies]
