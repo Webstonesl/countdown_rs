@@ -1,11 +1,11 @@
 use std::collections::BTreeMap;
 
-use crate::base_types::numbers::CountdownNumberBaseType;
+use crate::base_types::numbers::NumberType;
 
-pub struct KeyCount<T: CountdownNumberBaseType> {
+pub struct KeyCount<T: NumberType> {
     keys: BTreeMap<T, usize>,
 }
-impl<T: CountdownNumberBaseType> IntoIterator for KeyCount<T> {
+impl<T: NumberType> IntoIterator for KeyCount<T> {
     type Item = (T, usize);
 
     type IntoIter = <BTreeMap<T, usize> as std::iter::IntoIterator>::IntoIter;
@@ -14,7 +14,7 @@ impl<T: CountdownNumberBaseType> IntoIterator for KeyCount<T> {
         self.keys.into_iter()
     }
 }
-impl<T: CountdownNumberBaseType> FromIterator<T> for KeyCount<T> {
+impl<T: NumberType> FromIterator<T> for KeyCount<T> {
     fn from_iter<E: IntoIterator<Item = T>>(iter: E) -> Self {
         let mut keys = BTreeMap::new();
         for item in iter {
@@ -28,11 +28,11 @@ impl<T: CountdownNumberBaseType> FromIterator<T> for KeyCount<T> {
     }
 }
 
-pub struct KVPairIterator<T: CountdownNumberBaseType> {
+pub struct KVPairIterator<T: NumberType> {
     keys: BTreeMap<T, (usize, usize)>,
 }
 
-impl<T: CountdownNumberBaseType> Iterator for KVPairIterator<T> {
+impl<T: NumberType> Iterator for KVPairIterator<T> {
     type Item = Vec<(T, usize)>;
     fn next(&mut self) -> Option<Self::Item> {
         let last_non_full = 'a: {
@@ -58,7 +58,7 @@ impl<T: CountdownNumberBaseType> Iterator for KVPairIterator<T> {
         Some(self.keys.iter().map(|(t, (size, _))| (*t, *size)).collect())
     }
 }
-impl<T: CountdownNumberBaseType> From<KeyCount<T>> for KVPairIterator<T> {
+impl<T: NumberType> From<KeyCount<T>> for KVPairIterator<T> {
     fn from(value: KeyCount<T>) -> Self {
         Self {
             keys: value.keys.into_iter().map(|(t, v)| (t, (0, v))).collect(),

@@ -2,8 +2,13 @@
 name = "rust_countdown"
 version = "0.1.0"
 edition = "2024"
+
 [[bin]]
 name = "countdown"
 path = "src/bin/main.rs"
+required-features = ["parsing"]
+[features]
+parsing = []
 
-[dependencies]
+[lib]
+name = "rust_countdown"

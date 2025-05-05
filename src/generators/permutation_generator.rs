@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 #[cfg(test)]
 use std::collections::HashSet;
 
-use crate::base_types::numbers::CountdownNumberBaseType;
+use crate::base_types::numbers::NumberType;
 
 #[derive(Debug, Clone)]
 
@@ -78,13 +78,13 @@ fn test_unique_generator() {
 
 #[derive(Debug)]
 
-pub struct PermutationGenerator<T: CountdownNumberBaseType> {
+pub struct PermutationGenerator<T: NumberType> {
     groups: BTreeMap<usize, Option<usize>>,
     elements: BTreeMap<usize, T>,
     unique: UniquePermutationGenerator<usize>,
 }
 
-impl<T: CountdownNumberBaseType> FromIterator<(T, usize)>
+impl<T: NumberType> FromIterator<(T, usize)>
     for PermutationGenerator<T>
 {
     fn from_iter<E: IntoIterator<Item = (T, usize)>>(iter: E) -> Self {
@@ -116,7 +116,7 @@ impl<T: CountdownNumberBaseType> FromIterator<(T, usize)>
     }
 }
 
-impl<T: CountdownNumberBaseType> Iterator for PermutationGenerator<T> {
+impl<T: NumberType> Iterator for PermutationGenerator<T> {
     type Item = Vec<T>;
 
     fn next(&mut self) -> Option<Self::Item> {

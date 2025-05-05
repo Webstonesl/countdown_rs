@@ -1,6 +1,4 @@
 max_width = 80
-# blank_lines_upper_bound = 1
-# blank_lines_lower_bound = 1
 wrap_comments = true
 edition = "2024"
 error_on_line_overflow = true

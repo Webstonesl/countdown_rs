@@ -2,12 +2,12 @@ use super::{
     permutation_generator::PermutationGenerator,
     subset_generator::{KVPairIterator, KeyCount},
 };
-use crate::base_types::numbers::CountdownNumberBaseType;
-pub struct SubsetPermutationGenerator<T: CountdownNumberBaseType> {
+use crate::base_types::numbers::NumberType;
+pub struct SubsetPermutationGenerator<T: NumberType> {
     subsets: Vec<Vec<(T, usize)>>,
     permutation_generator: Option<PermutationGenerator<T>>,
 }
-impl<T: CountdownNumberBaseType> SubsetPermutationGenerator<T> {
+impl<T: NumberType> SubsetPermutationGenerator<T> {
     pub fn new<E: IntoIterator<Item = T>>(t: E) -> Self {
         let mut subsets = KVPairIterator::from(KeyCount::from_iter(t)).collect::<Vec<_>>();
         subsets.sort_by_cached_key(|a| -(a.iter().map(|(_, a)| *a).sum::<usize>() as isize));
@@ -18,7 +18,7 @@ impl<T: CountdownNumberBaseType> SubsetPermutationGenerator<T> {
         }
     }
 }
-impl<T: CountdownNumberBaseType> Iterator for SubsetPermutationGenerator<T> {
+impl<T: NumberType> Iterator for SubsetPermutationGenerator<T> {
     type Item = Vec<T>;
 
     fn next(&mut self) -> Option<Self::Item> {
